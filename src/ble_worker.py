@@ -43,15 +43,23 @@ class BleWorker(QThread):
         
         # In a robust application, you'd scan for the device name or UUID.
         # Let's scan by service UUID.
-        devices = await BleakScanner.discover(timeout=10.0)
+        devices = await BleakScanner.discover(timeout=5.0)
+
         target_device = None
-        print("\n--- Discovered Devices ---", flush=True)
-        for d in devices:
-            print(f"Name: {d.name}", flush=True)
-            if d.name == "ESP32-MPU6050-Tester":
-                target_device = d
-                break
-        print("--------------------------\n", flush=True)
+
+        for device in devices:
+            print(f"Found: {device.name}  {device.address}")
+
+            if device.name == DEVICE_NAME:
+                target_device = device
+
+        if target_device is None:
+            print("\n找不到 ESP32-MPU6050-Tester")
+            return
+
+        print("\n找到 ESP32!")
+        print(f"Name:    {target_device.name}")
+        print(f"Address: {target_device.address}")
         
         if not target_device:
             self.signals.connection_status.emit("Device not found")
