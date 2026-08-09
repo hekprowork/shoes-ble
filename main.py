@@ -10,7 +10,7 @@ class AppController:
     def __init__(self):
         self.app = QApplication(sys.argv)
         self.window = MainWindow()
-        self.sensor_fusion = SensorFusion(sample_period=0.2) # Adjusted to 5Hz (200ms)
+        self.sensor_fusion = SensorFusion(sample_period=0.02) # Adjusted to 5Hz (200ms)
         
         self.ble_worker = BleWorker()
         
