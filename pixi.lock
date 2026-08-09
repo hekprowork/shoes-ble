@@ -92,8 +92,6 @@ environments:
       - conda: https://conda.anaconda.org/conda-forge/osx-arm64/tk-8.6.13-hd3d0363_3.conda
       - conda: https://conda.anaconda.org/conda-forge/osx-arm64/zstd-1.5.7-hbf9d68e_6.conda
       - pypi: https://files.pythonhosted.org/packages/26/54/05aceb9cd80073805b3ed8522e3196e8cb22f70e741873fa51406c31f4e7/bleak-3.0.2-py3-none-any.whl
-      - pypi: https://files.pythonhosted.org/packages/32/91/30151a39f7570f448ed84529390628a651d7f27c87d73c9b887f8189695e/docutils-0.23-py3-none-any.whl
-      - pypi: https://files.pythonhosted.org/packages/36/76/931b879e1ad5e287c4ed9b60ccea807e63e06cd257829e154c79394abb66/ahrs-0.4.0-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/8c/88/300ad283bed0c971c52dcac6f70113e138169d4ce6d856ddd03d16081e51/pyobjc_core-12.2.1-cp312-cp312-macosx_10_13_universal2.whl
       - pypi: https://files.pythonhosted.org/packages/b3/8f/42cfa987c07a2b5ce8c236a42b0fb388b8807dac72c25e004cd4905ea9a3/pyobjc_framework_libdispatch-12.2.1-cp312-cp312-macosx_10_13_universal2.whl
       - pypi: https://files.pythonhosted.org/packages/c6/c4/7938016860850e28c001dc9b7c653352c43f7aebfffc6d3c5fd087281f22/pyobjc_framework_corebluetooth-12.2.1-cp312-cp312-macosx_10_13_universal2.whl
@@ -176,8 +174,6 @@ environments:
       - pypi: https://files.pythonhosted.org/packages/00/f4/a9ede5f3f0d86abfc7590726cf711133d97419b49ced372fca532e4f0696/winrt_windows_devices_enumeration-3.2.1-cp312-cp312-win_amd64.whl
       - pypi: https://files.pythonhosted.org/packages/26/48/074779081841f6eba4987930c4e7adcec38a5985b7dffd9fecc41f39a89c/winrt_windows_devices_bluetooth_advertisement-3.2.1-cp312-cp312-win_amd64.whl
       - pypi: https://files.pythonhosted.org/packages/26/54/05aceb9cd80073805b3ed8522e3196e8cb22f70e741873fa51406c31f4e7/bleak-3.0.2-py3-none-any.whl
-      - pypi: https://files.pythonhosted.org/packages/32/91/30151a39f7570f448ed84529390628a651d7f27c87d73c9b887f8189695e/docutils-0.23-py3-none-any.whl
-      - pypi: https://files.pythonhosted.org/packages/36/76/931b879e1ad5e287c4ed9b60ccea807e63e06cd257829e154c79394abb66/ahrs-0.4.0-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/37/8e/91464854dfc9e0be9ce8dcbe2bd6a67c19b68ab91584fc5de0f4f13e78f8/winrt_windows_devices_radios-3.2.1-cp312-cp312-win_amd64.whl
       - pypi: https://files.pythonhosted.org/packages/37/94/5b888713e472746635a382e523513ab1b8200af55c5b56bc70e1e4369115/winrt_windows_foundation_collections-3.2.1-cp312-cp312-win_amd64.whl
       - pypi: https://files.pythonhosted.org/packages/49/d3/b8441a820a491ddfc024b0b0cf0393375b75ea13866d9c66727e54c2fc80/typing_extensions-4.16.0-py3-none-any.whl
@@ -2419,27 +2415,6 @@ packages:
   - dbus-fast>=1.83.0 ; sys_platform == 'linux'
   - bleak-pythonista>=0.1.1 ; extra == 'pythonista'
   requires_python: '>=3.10'
-- pypi: https://files.pythonhosted.org/packages/32/91/30151a39f7570f448ed84529390628a651d7f27c87d73c9b887f8189695e/docutils-0.23-py3-none-any.whl
-  name: docutils
-  version: '0.23'
-  sha256: 25d013af9bf23bc1c7b2b093dff4208166c53a94786c9e447808335ef1185fea
-  requires_python: '>=3.9'
-- pypi: https://files.pythonhosted.org/packages/36/76/931b879e1ad5e287c4ed9b60ccea807e63e06cd257829e154c79394abb66/ahrs-0.4.0-py3-none-any.whl
-  name: ahrs
-  version: 0.4.0
-  sha256: 7be83963d8021ae326d20b646c05a2218401e559f645bb5c2e40ff7dd54245d7
-  requires_dist:
-  - docutils>=0.18.1
-  - numpy>=1.17
-  - hatch ; extra == 'build'
-  - hatchling ; extra == 'build'
-  - black ; extra == 'dev'
-  - flake8 ; extra == 'dev'
-  - pytest ; extra == 'dev'
-  - pydata-sphinx-theme ; extra == 'docs'
-  - sphinx ; extra == 'docs'
-  - sphinxcontrib-bibtex>=2.6.3 ; extra == 'docs'
-  requires_python: '>=3.9'
 - pypi: https://files.pythonhosted.org/packages/37/8e/91464854dfc9e0be9ce8dcbe2bd6a67c19b68ab91584fc5de0f4f13e78f8/winrt_windows_devices_radios-3.2.1-cp312-cp312-win_amd64.whl
   name: winrt-windows-devices-radios
   version: 3.2.1

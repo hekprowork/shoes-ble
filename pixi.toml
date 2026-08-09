@@ -15,5 +15,4 @@ pyopengl = ">=3.1.10,<4"
 
 [pypi-dependencies]
 bleak = ">=3.0.2, <4"
-ahrs = ">=0.4.0, <0.5"
 qasync = ">=0.27.1, <1"

@@ -79,7 +79,9 @@ class MainWindow(QMainWindow):
     def update_status(self, status: str):
         self.status_label.setText(f"Status: {status}")
 
-    def update_sensor_data(self, fsr1, fsr2, acc_x, acc_y, acc_z, gyro_x, gyro_y, gyro_z, q):
+    def update_sensor_data(
+        self, fsr1, fsr2, acc_x, acc_y, acc_z, gyro_x, gyro_y, gyro_z
+    ):
         # Shift data left
         self.fsr1_data[:-1] = self.fsr1_data[1:]
         self.fsr2_data[:-1] = self.fsr2_data[1:]
@@ -110,9 +112,8 @@ class MainWindow(QMainWindow):
         self.gyro_y_line.setData(self.gyro_y_data)
         self.gyro_z_line.setData(self.gyro_z_data)
 
-        # Update 3D Posture
-        # ahrs returns [w, x, y, z]
-        w, x, y, z = q[0], q[1], q[2], q[3]
+    def update_orientation(self, w, x, y, z):
+        # Firmware quaternion order is [w, x, y, z].
         quat = QQuaternion(w, x, y, z)
         
         # We need to apply the rotation to the box.
