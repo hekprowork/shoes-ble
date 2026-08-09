@@ -37,19 +37,21 @@ class BleWorker(QThread):
             loop.close()
 
     async def ble_task(self):
+        import sys
         self.signals.connection_status.emit("Scanning for ESP32-C3...")
+        print("Starting BLE scan... (this will take 10 seconds)", flush=True)
         
         # In a robust application, you'd scan for the device name or UUID.
         # Let's scan by service UUID.
         devices = await BleakScanner.discover(timeout=10.0)
         target_device = None
-        print("\n--- Discovered Devices ---")
+        print("\n--- Discovered Devices ---", flush=True)
         for d in devices:
-            print(f"Name: {d.name}, Address: {d.address}, UUIDs: {d.metadata.get('uuids', [])}")
+            print(f"Name: {d.name}, Address: {d.address}, UUIDs: {d.metadata.get('uuids', [])}", flush=True)
             if (d.name and "ESP32-MPU6050-Tester" in d.name) or SERVICE_UUID in d.metadata.get('uuids', []):
                 target_device = d
                 break
-        print("--------------------------\n")
+        print("--------------------------\n", flush=True)
         
         if not target_device:
             self.signals.connection_status.emit("Device not found")
