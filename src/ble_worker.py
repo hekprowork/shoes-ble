@@ -3,6 +3,7 @@ import struct
 from bleak import BleakClient, BleakScanner
 from PySide6.QtCore import QThread, Signal, QObject
 
+DEVICE_NAME = "ESP32-MPU6050-Tester"
 SERVICE_UUID = "12345678-1234-5678-1234-56789abcdef0"
 CHAR_UUID = "abcdef01-1234-5678-1234-56789abcdef0"
 
@@ -25,45 +26,35 @@ class BleWorker(QThread):
         self.wait()
 
     def run(self):
-        # Create a new event loop for this thread
-        loop = asyncio.new_event_loop()
-        asyncio.set_event_loop(loop)
-        
         try:
-            loop.run_until_complete(self.ble_task())
+            asyncio.run(self.ble_task())
         except Exception as e:
             self.signals.connection_status.emit(f"Error: {e}")
-        finally:
-            loop.close()
 
     async def ble_task(self):
         import sys
         self.signals.connection_status.emit("Scanning for ESP32-C3...")
-        print("Starting BLE scan... (this will take 10 seconds)", flush=True)
+        print("Starting BLE scan... (this will take 5 seconds)", flush=True)
         
-        # In a robust application, you'd scan for the device name or UUID.
-        # Let's scan by service UUID.
         devices = await BleakScanner.discover(timeout=5.0)
-
         target_device = None
 
-        for device in devices:
-            print(f"Found: {device.name}  {device.address}")
-
-            if device.name == DEVICE_NAME:
-                target_device = device
+        print("\n--- Discovered Devices ---", flush=True)
+        for d in devices:
+            print(f"Name: {d.name}, Address: {d.address}", flush=True)
+            if d.name == DEVICE_NAME:
+                target_device = d
+                break
+        print("--------------------------\n", flush=True)
 
         if target_device is None:
-            print("\n找不到 ESP32-MPU6050-Tester")
+            self.signals.connection_status.emit("Device not found")
+            print("\n找不到", DEVICE_NAME, flush=True)
             return
 
-        print("\n找到 ESP32!")
-        print(f"Name:    {target_device.name}")
-        print(f"Address: {target_device.address}")
-        
-        if not target_device:
-            self.signals.connection_status.emit("Device not found")
-            return
+        print("\n找到 ESP32!", flush=True)
+        print(f"Name:    {target_device.name}", flush=True)
+        print(f"Address: {target_device.address}", flush=True)
 
         self.signals.connection_status.emit(f"Connecting to {target_device.name}...")
         
