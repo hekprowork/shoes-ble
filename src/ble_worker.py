@@ -47,7 +47,7 @@ class BleWorker(QThread):
         target_device = None
         print("\n--- Discovered Devices ---", flush=True)
         for d in devices:
-            print(f"Name: {d.name}, Address: {d.address}, UUIDs: {d.metadata.get('uuids', [])}", flush=True)
+            print(f"Name: {d.name}", flush=True)
             if d.name == "ESP32-MPU6050-Tester":
                 target_device = d
                 break
