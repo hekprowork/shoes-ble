@@ -74,8 +74,11 @@
 
 **步驟一：取得專案程式碼**
 （若您不熟悉 Git，建議使用方式 A）
-- **方式 A (一般下載)**：前往專案的 GitHub 網址，點選右上方綠色的「Code」按鈕，接著選擇「Download ZIP」。下載完成後，請將該 ZIP 檔解壓縮至您方便尋找的資料夾。
-- **方式 B (透過 Git)**：在終端機輸入 `git clone <專案的_GitHub_網址>`
+- **方式 A (一般下載)**：前往專案的 GitHub 頁面 ([https://github.com/hekprowork/shoes-ble](https://github.com/hekprowork/shoes-ble))，點選右上方綠色的「Code」按鈕，接著選擇「Download ZIP」。下載完成後，請將該 ZIP 檔解壓縮至您方便尋找的資料夾。
+- **方式 B (透過 Git)**：在終端機輸入：
+  ```bash
+  git clone https://github.com/hekprowork/shoes-ble.git
+  ```
 
 **步驟二：開啟終端機並進入專案目錄**
 1. 打開電腦的終端機 (Mac 請搜尋「終端機」/ Terminal；Windows 請打開「命令提示字元」或 PowerShell)。
