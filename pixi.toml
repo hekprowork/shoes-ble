@@ -1,0 +1,17 @@
+[workspace]
+channels = ["conda-forge"]
+name = "鞋底偵測"
+platforms = ["osx-arm64"]
+version = "0.1.0"
+
+[tasks]
+
+[dependencies]
+pyside6 = ">=6.11.1,<7"
+pyqtgraph = ">=0.14.0,<0.15"
+numpy = ">=2.5.1,<3"
+pyopengl = ">=3.1.10,<4"
+
+[pypi-dependencies]
+bleak = ">=3.0.2, <4"
+ahrs = ">=0.4.0, <0.5"
