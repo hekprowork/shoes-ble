@@ -1,7 +1,7 @@
 import asyncio
 import struct
 from bleak import BleakClient, BleakScanner
-from PySide6.QtCore import QThread, Signal, QObject
+from PySide6.QtCore import Signal, QObject
 
 DEVICE_NAME = "ESP32-MPU6050-Tester"
 SERVICE_UUID = "12345678-1234-5678-1234-56789abcdef0"
@@ -13,7 +13,7 @@ class BleSignals(QObject):
     data_received = Signal(float, float, float, float, float, float, float, float)
     connection_status = Signal(str)
 
-class BleWorker(QThread):
+class BleWorker(QObject):
     def __init__(self, parent=None):
         super().__init__(parent)
         self.signals = BleSignals()
@@ -22,16 +22,8 @@ class BleWorker(QThread):
 
     def stop(self):
         self._is_running = False
-        self.quit()
-        self.wait()
 
-    def run(self):
-        try:
-            asyncio.run(self.ble_task())
-        except Exception as e:
-            self.signals.connection_status.emit(f"Error: {e}")
-
-    async def ble_task(self):
+    async def start(self):
         import sys
         self.signals.connection_status.emit("Scanning for ESP32-C3...")
         print("Starting BLE scan... (this will take 5 seconds)", flush=True)

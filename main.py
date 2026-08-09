@@ -1,4 +1,6 @@
 import sys
+import asyncio
+import qasync
 from PySide6.QtWidgets import QApplication
 from src.ui_main import MainWindow
 from src.ble_worker import BleWorker
@@ -27,13 +29,18 @@ class AppController:
 
     def run(self):
         self.window.show()
-        self.ble_worker.start()
         
-        ret = self.app.exec()
+        loop = qasync.QEventLoop(self.app)
+        asyncio.set_event_loop(loop)
         
+        # Spawn the BLE background task in the shared event loop
+        loop.create_task(self.ble_worker.start())
+        
+        with loop:
+            loop.run_forever()
+            
         # Cleanup
         self.ble_worker.stop()
-        sys.exit(ret)
 
 if __name__ == "__main__":
     controller = AppController()
