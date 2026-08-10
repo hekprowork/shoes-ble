@@ -108,7 +108,7 @@ void updateConnectionState() {
 
 void publishSample(float dt) {
   const uint16_t fsr1 = static_cast<uint16_t>(analogRead(FSR1_PIN));
-  const uint16_t fsr2 = static_cast<uint16_t>(4095 - analogRead(FSR2_PIN));
+  const uint16_t fsr2 = static_cast<uint16_t>(analogRead(FSR2_PIN));
 
   sensors_event_t acceleration;
   sensors_event_t gyro;
