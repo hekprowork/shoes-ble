@@ -26,7 +26,9 @@
 ### 3.1 GATT 服務定義
 - **Device Name**: `ESP32-MPU6050-Tester`
 - **Service UUID**: `12345678-1234-5678-1234-56789abcdef0`
-- **Characteristic UUID**: `abcdef01-1234-5678-1234-56789abcdef0`
+- **Raw Sensor Characteristic UUID**: `abcdef01-1234-5678-1234-56789abcdef0`
+- **Quaternion Characteristic UUID**: `abcdef02-1234-5678-1234-56789abcdef0`
+- **Quaternion Payload**: four little-endian `float32` values in `[w, x, y, z]` order (16 bytes, 50 Hz)
 - **屬性**: READ, NOTIFY
 
 ### 3.2 封包資料格式 (16 Bytes Payload)
