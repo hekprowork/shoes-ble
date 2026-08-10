@@ -1,0 +1,19 @@
+{
+  "name": "frontend",
+  "private": true,
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "typescript": "^4.5.4",
+    "vite": "^3.0.7"
+  },
+  "dependencies": {
+    "@types/three": "^0.185.4",
+    "chart.js": "^4.5.1",
+    "three": "^0.185.1"
+  }
+}

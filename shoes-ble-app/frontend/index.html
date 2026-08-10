@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>shoes-ble-app</title>
+</head>
+<body>
+<div id="app">
+    <div class="sidebar">
+        <button id="connectBtn">Connect BLE</button>
+        <div id="status">Status: Disconnected</div>
+        <div id="three-container" style="width: 100%; height: 300px;"></div>
+    </div>
+    <div class="main-content">
+        <div class="chart-container">
+            <canvas id="fsrChart"></canvas>
+        </div>
+        <div class="chart-container">
+            <canvas id="imuChart"></canvas>
+        </div>
+    </div>
+</div>
+<script src="./src/main.ts" type="module"></script>
+</body>
+</html>
