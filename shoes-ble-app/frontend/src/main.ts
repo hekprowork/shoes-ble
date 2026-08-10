@@ -53,22 +53,24 @@ const imuChart = new Chart(imuCtx!, {
     options: { animation: false, responsive: true, maintainAspectRatio: false }
 });
 
+function pushData(chart: Chart, values: number[]) {
+    values.forEach((val, i) => {
+        const dataArr = chart.data.datasets[i].data;
+        dataArr.shift();
+        dataArr.push(val);
+    });
+    chart.update();
+}
+
 EventsOn('sensor_data', (data: any) => {
     // Update FSR
-    fsrChart.data.datasets[0].data.shift();
-    fsrChart.data.datasets[0].data.push(data.fsr1);
-    fsrChart.data.datasets[1].data.shift();
-    fsrChart.data.datasets[1].data.push(data.fsr2);
-    fsrChart.update();
+    pushData(fsrChart, [data.fsr1, data.fsr2]);
 
     // Update IMU
-    imuChart.data.datasets[0].data.shift(); imuChart.data.datasets[0].data.push(data.accX);
-    imuChart.data.datasets[1].data.shift(); imuChart.data.datasets[1].data.push(data.accY);
-    imuChart.data.datasets[2].data.shift(); imuChart.data.datasets[2].data.push(data.accZ);
-    imuChart.data.datasets[3].data.shift(); imuChart.data.datasets[3].data.push(data.gyroX);
-    imuChart.data.datasets[4].data.shift(); imuChart.data.datasets[4].data.push(data.gyroY);
-    imuChart.data.datasets[5].data.shift(); imuChart.data.datasets[5].data.push(data.gyroZ);
-    imuChart.update();
+    pushData(imuChart, [
+        data.acc.x, data.acc.y, data.acc.z,
+        data.gyro.x, data.gyro.y, data.gyro.z
+    ]);
 });
 
 // 3. Setup Three.js
@@ -83,9 +85,6 @@ const geometry = new THREE.BoxGeometry(2, 0.5, 4);
 const material = new THREE.MeshBasicMaterial({ color: 0x00ff00, wireframe: true });
 const box = new THREE.Mesh(geometry, material);
 scene.add(box);
-
-const axesHelper = new THREE.AxesHelper( 5 );
-scene.add( axesHelper );
 
 camera.position.z = 6;
 camera.position.y = 3;

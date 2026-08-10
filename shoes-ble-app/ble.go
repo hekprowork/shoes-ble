@@ -18,15 +18,17 @@ var (
 	quaternionCharUUID, _ = bluetooth.ParseUUID("abcdef02-1234-5678-1234-56789abcdef0")
 )
 
+type Vector3 struct {
+	X int16 `json:"x"`
+	Y int16 `json:"y"`
+	Z int16 `json:"z"`
+}
+
 type SensorData struct {
-	FSR1  uint16 `json:"fsr1"`
-	FSR2  uint16 `json:"fsr2"`
-	AccX  int16  `json:"accX"`
-	AccY  int16  `json:"accY"`
-	AccZ  int16  `json:"accZ"`
-	GyroX int16  `json:"gyroX"`
-	GyroY int16  `json:"gyroY"`
-	GyroZ int16  `json:"gyroZ"`
+	FSR1 uint16  `json:"fsr1"`
+	FSR2 uint16  `json:"fsr2"`
+	Acc  Vector3 `json:"acc"`
+	Gyro Vector3 `json:"gyro"`
 }
 
 type QuaternionData struct {
@@ -34,6 +36,26 @@ type QuaternionData struct {
 	X float32 `json:"x"`
 	Y float32 `json:"y"`
 	Z float32 `json:"z"`
+}
+
+func ParseSensorData(buf []byte) (SensorData, error) {
+	var data SensorData
+	if len(buf) != 16 {
+		return data, fmt.Errorf("invalid sensor data length: %d", len(buf))
+	}
+	reader := bytes.NewReader(buf)
+	err := binary.Read(reader, binary.LittleEndian, &data)
+	return data, err
+}
+
+func ParseQuaternionData(buf []byte) (QuaternionData, error) {
+	var data QuaternionData
+	if len(buf) != 16 {
+		return data, fmt.Errorf("invalid quaternion data length: %d", len(buf))
+	}
+	reader := bytes.NewReader(buf)
+	err := binary.Read(reader, binary.LittleEndian, &data)
+	return data, err
 }
 
 type BLEManager struct {
@@ -92,29 +114,13 @@ func (b *BLEManager) connect(addr bluetooth.Address) {
 		c := char // capture loop variable
 		if c.UUID() == sensorCharUUID {
 			c.EnableNotifications(func(buf []byte) {
-				if len(buf) == 16 {
-					var data SensorData
-					reader := bytes.NewReader(buf)
-					binary.Read(reader, binary.LittleEndian, &data.FSR1)
-					binary.Read(reader, binary.LittleEndian, &data.FSR2)
-					binary.Read(reader, binary.LittleEndian, &data.AccX)
-					binary.Read(reader, binary.LittleEndian, &data.AccY)
-					binary.Read(reader, binary.LittleEndian, &data.AccZ)
-					binary.Read(reader, binary.LittleEndian, &data.GyroX)
-					binary.Read(reader, binary.LittleEndian, &data.GyroY)
-					binary.Read(reader, binary.LittleEndian, &data.GyroZ)
+				if data, err := ParseSensorData(buf); err == nil {
 					runtime.EventsEmit(b.ctx, "sensor_data", data)
 				}
 			})
 		} else if c.UUID() == quaternionCharUUID {
 			c.EnableNotifications(func(buf []byte) {
-				if len(buf) == 16 {
-					var data QuaternionData
-					reader := bytes.NewReader(buf)
-					binary.Read(reader, binary.LittleEndian, &data.W)
-					binary.Read(reader, binary.LittleEndian, &data.X)
-					binary.Read(reader, binary.LittleEndian, &data.Y)
-					binary.Read(reader, binary.LittleEndian, &data.Z)
+				if data, err := ParseQuaternionData(buf); err == nil {
 					runtime.EventsEmit(b.ctx, "quaternion_data", data)
 				}
 			})
